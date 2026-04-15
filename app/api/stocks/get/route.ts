@@ -2,7 +2,7 @@ import { getDB } from "@/lib/db";
 
 export function GET() {
   try {
-    const db = getDB();
+   const db: any = getDB();
 
     const stocks = db
       .prepare("SELECT * FROM stocks")

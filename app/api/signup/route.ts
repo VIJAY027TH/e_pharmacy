@@ -3,7 +3,7 @@ import { getDB } from "@/lib/db";
 export async function POST(req: Request) {
   const { name, email, password } = await req.json();
 
-  const db = getDB();
+  const db: any = getDB();
 
   // check duplicate
   const existing = db

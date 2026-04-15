@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getDB } from "@/lib/db";
 
 export async function POST(req: Request) {
-  const db = getDB();
+  const db: any = getDB();
   const body = await req.json();
 
   const { name, type, quantity, user } = body;

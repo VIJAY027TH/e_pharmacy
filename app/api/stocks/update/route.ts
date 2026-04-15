@@ -3,7 +3,7 @@ import { getDB } from "@/lib/db";
 export async function POST(req: Request) {
   const { id, name, type, quantity } = await req.json();
 
-  const db = getDB();
+const db: any = getDB();
 
   // Prevent duplicate insert
   db.prepare(

@@ -3,7 +3,7 @@ import { getDB } from "@/lib/db";
 export async function POST(req: Request) {
   const { type, name, quantity } = await req.json();
 
-  const db = getDB();
+ const db: any = getDB();
 
   // Insert stock directly
   db.prepare(

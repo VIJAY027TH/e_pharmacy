@@ -3,7 +3,7 @@ import { getDB } from "@/lib/db";
 export async function POST(req: Request) {
   const { email, password } = await req.json();
 
-  const db = getDB();
+  const db: any = getDB();
 
   const user = db
     .prepare("SELECT * FROM users WHERE email = ? AND password = ?")
