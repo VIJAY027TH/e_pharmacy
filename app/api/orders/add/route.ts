@@ -7,10 +7,10 @@ export async function POST(req: Request) {
 
   const { name, type, quantity, user } = body;
 
-  // 1. SAVE ORDER
+  // 1. SAVE ORDER with status + time 🔥
   await db.run(
-    "INSERT INTO orders (name, type, quantity, user) VALUES (?, ?, ?, ?)",
-    [name, type, quantity, user]
+    "INSERT INTO orders (name, type, quantity, user, status, created_at) VALUES (?, ?, ?, ?, ?, ?)",
+    [name, type, quantity, user, "Pending", Date.now()]
   );
 
   // 2. GET CURRENT STOCK
