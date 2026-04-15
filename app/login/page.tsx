@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import "./login.css";
 
 export default function LoginPage() {
@@ -17,7 +16,7 @@ export default function LoginPage() {
     const res = await fetch("/api/login", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json", //  IMPORTANT
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ email, password }),
     });
@@ -29,57 +28,58 @@ export default function LoginPage() {
       return;
     }
 
-    //  store session
     localStorage.setItem("user", data.email);
     localStorage.setItem("role", data.role);
 
-    //  redirect
     if (data.role === "admin") {
-      window.location.href = "/admin";
+      router.push("/admin");
     } else {
-      window.location.href = "/dashboard";
+      router.push("/dashboard");
     }
   };
 
   return (
-    <div className="container">
-      <div className="card">
-    
-        <h2 className="title">💊 E-Pharmacy</h2>
-      <p style={{ color: "#aaa", marginBottom: "15px" }}>Secure Login</p>
+    <div className="page">
+      <div className="container">
+        <div className="card">
 
-        <form onSubmit={handleLogin} className="form">
-          <input
-            type="email"
-            placeholder="Email"
-            className="input"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <h2 className="title">💊 E-Pharmacy</h2>
+          <p style={{ color: "#aaa", marginBottom: "15px" }}>
+            Secure Login
+          </p>
 
-          <input
-            type="password"
-            placeholder="Password"
-            className="input"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <form onSubmit={handleLogin} className="form">
+            <input
+              type="email"
+              placeholder="Email"
+              className="input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
 
-          <button type="submit" className="button">
-            Sign In
-          </button>
-        </form>
+            <input
+              type="password"
+              placeholder="Password"
+              className="input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
 
-       {/*  <p style={{ fontSize: "12px" }}>
-          Admin: admin@gmail.com / admin123
-        </p> */}
+            <button type="submit" className="button">
+              Sign In
+            </button>
+          </form>
 
-        <p className="footer">
-          Don’t have an account?{" "}
-          <a href="/signup" className="link">
-  Sign up
-</a>
-        </p>
+          <p className="footer">
+            Don’t have an account?{" "}
+            <a href="/signup" className="link">
+              Sign up
+            </a>
+          </p>
+
+        </div>
       </div>
     </div>
   );
