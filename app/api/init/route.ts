@@ -1,7 +1,7 @@
 import { getDB } from "@/lib/db";
 
 export function GET() {
-  const db = getDB();
+  const db: any = getDB();
 
   db.exec(`
     CREATE TABLE IF NOT EXISTS users (
