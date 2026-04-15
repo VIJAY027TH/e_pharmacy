@@ -1,5 +1,4 @@
-import sqlite3 from "sqlite3";
-import { open } from "sqlite";
+import Database from "better-sqlite3";
 import bcrypt from "bcrypt";
 
 let db: any = null;
@@ -7,10 +6,7 @@ let db: any = null;
 export async function getDB() {
   if (db) return db;
 
-  db = await open({
-    filename: "./database.sqlite",
-    driver: sqlite3.Database,
-  });
+  db = new Database("./database.sqlite");
 
   //  Auto create table if not exists
   await db.exec(`

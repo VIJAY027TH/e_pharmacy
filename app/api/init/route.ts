@@ -1,9 +1,9 @@
 import { getDB } from "@/lib/db";
 
-export async function GET() {
-  const db = await getDB();
+export function GET() {
+  const db = getDB();
 
-  await db.exec(`
+  db.exec(`
     CREATE TABLE IF NOT EXISTS users (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       email TEXT UNIQUE,

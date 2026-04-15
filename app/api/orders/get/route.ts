@@ -1,9 +1,11 @@
 import { getDB } from "@/lib/db";
 
-export async function GET() {
-  const db = await getDB();
+export function GET() {
+  const db = getDB();
 
-  const orders = await db.all("SELECT * FROM orders");
+  const orders = db
+    .prepare("SELECT * FROM orders")
+    .all();
 
   return Response.json(orders);
 }

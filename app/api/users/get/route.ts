@@ -1,9 +1,11 @@
 import { getDB } from "@/lib/db";
 
-export async function GET() {
-  const db = await getDB();
+export function GET() {
+  const db = getDB();
 
-  const users = await db.all("SELECT name, email FROM users WHERE role = 'user'");
+  const users = db
+    .prepare("SELECT name, email FROM users WHERE role = 'user'")
+    .all();
 
   return Response.json(users);
 }

@@ -3,15 +3,12 @@ import { getDB } from "@/lib/db";
 export async function POST(req: Request) {
   const { type, name, quantity } = await req.json();
 
-  const db = await getDB();
+  const db = getDB();
 
-  // Step 1: Add to Pending (orders table)
-  const result = await db.run(
-  "INSERT INTO stocks (type, name, quantity) VALUES (?, ?, ?)",
-  [type, name, quantity]
-);
+  // Insert stock directly
+  db.prepare(
+    "INSERT INTO stocks (type, name, quantity) VALUES (?, ?, ?)"
+  ).run(type, name, quantity);
 
-const insertedId = result.lastID;
-
-  return Response.json({ message: "Stock will be added in 30 sec" });
+  return Response.json({ message: "Stock added successfully" });
 }
