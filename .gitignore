@@ -1,0 +1,42 @@
+# =========================
+# Java / Spring Boot
+# =========================
+backend/target/
+*.class
+
+# Eclipse
+backend/.classpath
+backend/.project
+backend/.settings/
+
+# =========================
+# React / Node
+# =========================
+frontend/node_modules/
+frontend/dist/
+
+# =========================
+# Environment / Secrets
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Uploaded files
+# =========================
+backend/uploads/
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db
+# Local credential notes
+BD password.txt

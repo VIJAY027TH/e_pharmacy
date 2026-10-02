@@ -1,0 +1,138 @@
+-- PharmaVital local development database schema.
+CREATE DATABASE IF NOT EXISTS epharmacy_db;
+USE epharmacy_db;
+
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    phone VARCHAR(50),
+    address VARCHAR(500),
+    role VARCHAR(50) NOT NULL DEFAULT 'ROLE_USER',
+    status VARCHAR(50) NOT NULL DEFAULT 'ACTIVE',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS categories (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE,
+    description TEXT
+);
+
+CREATE TABLE IF NOT EXISTS medicines (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    brand VARCHAR(255),
+    composition VARCHAR(255),
+    dosage VARCHAR(100),
+    description TEXT,
+    price DECIMAL(10,2) NOT NULL,
+    stock_quantity INT NOT NULL DEFAULT 0,
+    category_id BIGINT,
+    requires_prescription BOOLEAN NOT NULL DEFAULT FALSE,
+    image_url VARCHAR(500),
+    ailment VARCHAR(255),
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS cart (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL UNIQUE,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS cart_items (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    cart_id BIGINT NOT NULL,
+    medicine_id BIGINT NOT NULL,
+    quantity INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (cart_id) REFERENCES cart(id) ON DELETE CASCADE,
+    FOREIGN KEY (medicine_id) REFERENCES medicines(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS prescriptions (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    order_id BIGINT,
+    file_url VARCHAR(500) NOT NULL,
+    status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
+    uploaded_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    verified_at DATETIME,
+    verified_by VARCHAR(255),
+    notes TEXT,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS orders (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    shipping_address VARCHAR(500) NOT NULL,
+    total_amount DECIMAL(10,2) NOT NULL,
+    order_status VARCHAR(50) NOT NULL DEFAULT 'PLACED',
+    payment_status VARCHAR(50) NOT NULL DEFAULT 'PENDING',
+    prescription_id BIGINT,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS order_items (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order_id BIGINT NOT NULL,
+    medicine_id BIGINT NOT NULL,
+    quantity INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+    FOREIGN KEY (medicine_id) REFERENCES medicines(id)
+);
+
+CREATE TABLE IF NOT EXISTS payments (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order_id BIGINT NOT NULL UNIQUE,
+    amount DECIMAL(10,2) NOT NULL,
+    payment_method VARCHAR(50) NOT NULL,
+    transaction_id VARCHAR(255) NOT NULL UNIQUE,
+    payment_status VARCHAR(50) NOT NULL,
+    payment_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS deliveries (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order_id BIGINT NOT NULL UNIQUE,
+    tracking_number VARCHAR(255) NOT NULL UNIQUE,
+    delivery_status VARCHAR(50) NOT NULL,
+    estimated_delivery DATETIME,
+    delivered_at DATETIME,
+    FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS reviews (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    medicine_id BIGINT NOT NULL,
+    rating INT NOT NULL,
+    comment TEXT,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (medicine_id) REFERENCES medicines(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS notifications (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    message TEXT NOT NULL,
+    type VARCHAR(50),
+    is_read BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
