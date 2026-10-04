@@ -42,16 +42,16 @@ export const Login = () => {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-xs font-semibold text-warm-700 uppercase mb-1">Email Address</label>
-          <div className="flex items-center px-3 bg-warm-50/50 rounded-xl border border-warm-200 focus-within:border-sage-500 focus-within:bg-white transition">
-            <Mail className="h-5 w-5 text-warm-400 mr-2" />
+          <label className="block text-xs font-semibold text-warm-700 uppercase tracking-wider mb-1.5">Email Address</label>
+          <div className="flex items-center px-3.5 bg-warm-50 rounded-xl border border-warm-200 focus-within:border-sage-500 focus-within:bg-white transition">
+            <Mail className="h-5 w-5 text-warm-400 mr-2.5 shrink-0" />
             <input
               type="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="user@epharmacy.com"
-              className="w-full bg-transparent py-3 text-sm outline-none text-warm-900"
+              placeholder="name@example.com"
+              className="w-full bg-transparent py-3 text-sm outline-none text-warm-900 placeholder-warm-400 font-medium"
             />
           </div>
         </div>
