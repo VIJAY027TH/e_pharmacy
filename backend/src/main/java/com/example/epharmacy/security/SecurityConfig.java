@@ -141,7 +141,7 @@ public class SecurityConfig {
             "http://127.0.0.1:5173",
 
             // Railway frontend
-            "https://considerate-prosperity-production.up.railway.app"
+            "https://e-pharmacy.up.railway.app"
         ));
 
         configuration.setAllowedMethods(Arrays.asList(
