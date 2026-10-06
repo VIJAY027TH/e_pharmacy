@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Activity, AlertCircle, CheckCircle2, Clock3, FileQuestion, Loader2 } from 'lucide-react';
+import { parseServerDate } from '../../utils/dateUtils';
 
 export function PageHeader({ eyebrow, title, subtitle, actions }) {
   return <header className="admin-page-header"><div><span className="admin-eyebrow">{eyebrow}</span><h1>{title}</h1>{subtitle && <p>{subtitle}</p>}</div>{actions && <div className="admin-page-actions">{actions}</div>}</header>;
@@ -79,10 +80,10 @@ export function OrderTimeline({ status }) {
 
 export function formatDate(value, withTime = false) {
   if (!value) return '—';
-  const date = new Date(value);
-  return Number.isNaN(date.getTime()) ? '—' : date.toLocaleString(undefined, withTime ? { dateStyle: 'medium', timeStyle: 'short' } : { dateStyle: 'medium' });
+  const date = parseServerDate(value);
+  return !date || Number.isNaN(date.getTime()) ? '—' : date.toLocaleString(undefined, withTime ? { dateStyle: 'medium', timeStyle: 'short' } : { dateStyle: 'medium' });
 }
 
 export function currency(value) {
-  return `$${Number(value || 0).toFixed(2)}`;
+  return `₹${Number(value || 0).toFixed(2)}`;
 }

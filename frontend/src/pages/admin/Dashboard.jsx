@@ -1,8 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { AlertTriangle, ArrowRight, CheckCircle2, ClipboardList, DollarSign, FileCheck2, PackageSearch, Pill, Users } from 'lucide-react';
+import { AlertTriangle, ArrowRight, CheckCircle2, ClipboardList, IndianRupee, FileCheck2, PackageSearch, Pill, Users } from 'lucide-react';
 import { adminService } from '../../services/adminService';
 import { PageHeader, MetricCard, StatusBadge, EmptyState, LoadingState, ErrorState, currency, formatDate } from '../../components/admin/AdminUI';
+import { parseServerDate } from '../../utils/dateUtils';
 
 const attentionStatus = new Set(['PLACED', 'CONFIRMED', 'PROCESSING', 'PACKED']);
 
@@ -37,14 +38,14 @@ export const Dashboard = () => {
   const healthyStock = inventory.filter((medicine) => Number(medicine.stockQuantity) > 10);
   const orderStates = ['PLACED', 'CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED'].map((status) => ({ status, count: orders.filter((order) => order.orderStatus === status).length }));
   const maxOrderCount = Math.max(1, ...orderStates.map((item) => item.count));
-  const recentOrders = [...orders].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 5);
+  const recentOrders = [...orders].sort((a, b) => (parseServerDate(b.createdAt)?.getTime() || 0) - (parseServerDate(a.createdAt)?.getTime() || 0)).slice(0, 5);
 
   return <div className="admin-page dashboard-page">
     <PageHeader eyebrow="PHARMACY OPERATIONS" title="Good morning, Administrator" subtitle="Here’s what needs attention across PharmaVital today." actions={<span className="today-stamp">Live overview <i /> Updated {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>} />
 
     <section className="dashboard-metrics" aria-label="Operational summary">
       <MetricCard label="Recorded orders" value={stats?.totalOrders ?? orders.length} note="All-time orders" icon={ClipboardList} tone="green" />
-      <MetricCard label="Recorded revenue" value={stats?.totalRevenue == null ? '—' : currency(stats.totalRevenue)} note="Cumulative recorded sales" icon={DollarSign} tone="amber" />
+      <MetricCard label="Recorded revenue" value={stats?.totalRevenue == null ? '—' : currency(stats.totalRevenue)} note="Cumulative recorded sales" icon={IndianRupee} tone="amber" />
       <MetricCard label="Pending prescriptions" value={stats?.pendingPrescriptions ?? '—'} note="Awaiting pharmacist review" icon={FileCheck2} tone="blue" />
       <MetricCard label="Low-stock medicines" value={stats?.lowStockMedicines ?? lowStock.length} note="10 units or fewer" icon={AlertTriangle} tone="red" />
     </section>

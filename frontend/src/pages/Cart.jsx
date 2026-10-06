@@ -71,7 +71,7 @@ export const Cart = () => {
           <div className="space-y-3 text-xs text-warm-500 border-t border-b border-warm-100 py-4 font-medium">
             <div className="flex justify-between">
               <span>Subtotal</span>
-              <span className="font-bold text-warm-900">${totalPrice.toFixed(2)}</span>
+              <span className="font-bold text-warm-900">₹{totalPrice.toFixed(2)}</span>
             </div>
             <div className="flex justify-between">
               <span>Estimated Delivery</span>
@@ -79,7 +79,7 @@ export const Cart = () => {
             </div>
             <div className="flex justify-between pt-2 border-t border-warm-100 text-base font-black text-warm-900">
               <span>Total Amount</span>
-              <span className="text-sage-700">${totalPrice.toFixed(2)}</span>
+              <span className="text-sage-700">₹{totalPrice.toFixed(2)}</span>
             </div>
           </div>
 

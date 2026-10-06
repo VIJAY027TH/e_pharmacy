@@ -117,7 +117,7 @@ class OrderServicePrescriptionValidationTest {
         medicine.setRequiresPrescription(false);
         medicine.setUnitsPerPack(20);
         medicine.setUnitType("sachets");
-        medicine.setName("HydraCare Mineral");
+        medicine.setName("MineralCell Complete Complex");
         cart.getItems().get(0).setQuantity(10);
         LocalDateTime createdAt = LocalDateTime.of(2026, 10, 2, 12, 0);
         when(orderRepository.save(any(Order.class))).thenAnswer(invocation -> {
@@ -142,7 +142,7 @@ class OrderServicePrescriptionValidationTest {
     }
 
     @Test
-    void rejectsSevenVitaCorePacksEvenWithValidPrescription() {
+    void rejectsSevenAuraVitalPacksEvenWithValidPrescription() {
         mockPrescription(PrescriptionStatus.APPROVED, CUSTOMER_ID, LocalDateTime.now().plusDays(1), true);
         medicine.setRequiresPrescription(false);
         medicine.setUnitsPerPack(30);
@@ -153,9 +153,9 @@ class OrderServicePrescriptionValidationTest {
     }
 
     @Test
-    void rejectsSixHydraCarePacksWithoutPrescriptionAtCheckout() {
+    void rejectsSixMineralCellPacksWithoutPrescriptionAtCheckout() {
         medicine.setRequiresPrescription(false);
-        medicine.setName("HydraCare Mineral");
+        medicine.setName("MineralCell Complete Complex");
         medicine.setUnitType("sachets");
         medicine.setUnitsPerPack(20);
         cart.getItems().get(0).setQuantity(6);
@@ -166,10 +166,10 @@ class OrderServicePrescriptionValidationTest {
     }
 
     @Test
-    void rejectsTwelveHydraCarePacksAtCheckoutEvenWithValidPrescription() {
+    void rejectsTwelveMineralCellPacksAtCheckoutEvenWithValidPrescription() {
         mockPrescription(PrescriptionStatus.APPROVED, CUSTOMER_ID, LocalDateTime.now().plusDays(1), true);
         medicine.setRequiresPrescription(false);
-        medicine.setName("HydraCare Mineral");
+        medicine.setName("MineralCell Complete Complex");
         medicine.setUnitType("sachets");
         medicine.setUnitsPerPack(20);
         cart.getItems().get(0).setQuantity(12);
@@ -180,10 +180,10 @@ class OrderServicePrescriptionValidationTest {
     }
 
     @Test
-    void rejectsElevenHydraCarePacksAtCheckoutEvenWithValidPrescription() {
+    void rejectsElevenMineralCellPacksAtCheckoutEvenWithValidPrescription() {
         mockPrescription(PrescriptionStatus.APPROVED, CUSTOMER_ID, LocalDateTime.now().plusDays(1), true);
         medicine.setRequiresPrescription(false);
-        medicine.setName("HydraCare Mineral");
+        medicine.setName("MineralCell Complete Complex");
         medicine.setUnitType("sachets");
         medicine.setUnitsPerPack(20);
         cart.getItems().get(0).setQuantity(11);

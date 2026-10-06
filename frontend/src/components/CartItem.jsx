@@ -16,7 +16,7 @@ export const CartItem = ({ item }) => {
         />
         <div>
           <h4 className="font-extrabold text-warm-900 text-sm">{medicine.name}</h4>
-          <p className="text-xs text-warm-500 font-medium">Brand: {medicine.brand || 'Generic'} • ${Number(medicine.price || 0).toFixed(2)} per pack</p>
+          <p className="text-xs text-warm-500 font-medium">Brand: {medicine.brand || 'Generic'} • ₹{Number(medicine.price || 0).toFixed(2)} per pack</p>
           <p className="text-xs text-warm-500">{medicine.unitsPerPack || 1} {medicine.unitType || 'units'} per pack</p>
           {medicine.requiresPrescription && (
               <span className="inline-flex items-center gap-1 text-[10px] font-bold text-gold-700 bg-gold-50 border border-gold-300/60 px-2 py-0.5 rounded-md mt-1">
@@ -47,7 +47,7 @@ export const CartItem = ({ item }) => {
 
         <div className="text-right min-w-[80px]">
           <span className="text-sm font-black text-warm-900">
-            ${(item.price * item.quantity).toFixed(2)}
+            ₹{(item.price * item.quantity).toFixed(2)}
           </span>
         </div>
 

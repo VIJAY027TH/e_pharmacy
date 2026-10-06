@@ -54,10 +54,10 @@ class CartServiceQuantityLimitTest {
         user.setId(USER_ID);
         medicine = new Medicine();
         medicine.setId(MEDICINE_ID);
-        medicine.setName("VitaCore Daily");
+        medicine.setName("AuraVital Complete");
         medicine.setUnitType("tablets");
         medicine.setUnitsPerPack(30);
-        medicine.setPrice(new BigDecimal("18.50"));
+        medicine.setPrice(new BigDecimal("245.00"));
         medicine.setStockQuantity(80);
         medicine.setRequiresPrescription(false);
         cart = new Cart(user);
@@ -69,7 +69,7 @@ class CartServiceQuantityLimitTest {
     }
 
     @Test
-    void allowsThreeVitaCorePacksAtNinetyUnits() {
+    void allowsThreeAuraVitalPacksAtNinetyUnits() {
         stubCartSaves();
         cartService.addItemToCart(USER_ID, new CartItemRequest(MEDICINE_ID, 3));
 
@@ -78,7 +78,7 @@ class CartServiceQuantityLimitTest {
     }
 
     @Test
-    void rejectsFourVitaCorePacksAtOneHundredTwentyUnitsWithoutPrescription() {
+    void rejectsFourAuraVitalPacksAtOneHundredTwentyUnitsWithoutPrescription() {
         assertThrows(BadRequestException.class,
                 () -> cartService.addItemToCart(USER_ID, new CartItemRequest(MEDICINE_ID, 4)));
 
@@ -86,7 +86,7 @@ class CartServiceQuantityLimitTest {
     }
 
     @Test
-    void allowsFourVitaCorePacksWithApprovedUnexpiredCoveringPrescription() {
+    void allowsFourAuraVitalPacksWithApprovedUnexpiredCoveringPrescription() {
         stubCartSaves();
         Prescription prescription = new Prescription();
         prescription.setStatus(PrescriptionStatus.APPROVED);
@@ -101,7 +101,7 @@ class CartServiceQuantityLimitTest {
     }
 
     @Test
-    void allowsSixVitaCorePacksButRejectsSevenWithPrescription() {
+    void allowsSixAuraVitalPacksButRejectsSevenWithPrescription() {
         Prescription prescription = new Prescription();
         prescription.setId(65L);
         prescription.setStatus(PrescriptionStatus.APPROVED);
@@ -137,8 +137,8 @@ class CartServiceQuantityLimitTest {
     }
 
     @Test
-    void appliesHydraCareLimitWithoutPrescriptionAtCartApiBoundary() {
-        medicine.setName("HydraCare Mineral");
+    void appliesMineralCellLimitWithoutPrescriptionAtCartApiBoundary() {
+        medicine.setName("MineralCell Complete Complex");
         medicine.setUnitType("sachets");
         medicine.setUnitsPerPack(20);
         stubCartSaves();
@@ -153,8 +153,8 @@ class CartServiceQuantityLimitTest {
     }
 
     @Test
-    void enforcesHydraCareTwoHundredUnitPrescriptionCeilingAtCartApiBoundary() {
-        medicine.setName("HydraCare Mineral");
+    void enforcesMineralCellTwoHundredUnitPrescriptionCeilingAtCartApiBoundary() {
+        medicine.setName("MineralCell Complete Complex");
         medicine.setUnitType("sachets");
         medicine.setUnitsPerPack(20);
         Prescription prescription = new Prescription();

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import API from '../services/api';
 import { Bell, CheckCircle2, Info, AlertTriangle } from 'lucide-react';
+import { parseServerDate } from '../utils/dateUtils';
 
 export const Notifications = () => {
   const [notifications, setNotifications] = useState([]);
@@ -59,7 +60,7 @@ export const Notifications = () => {
                 <span className="text-xs font-bold text-sage-700 uppercase tracking-wider">{n.type}</span>
                 <h4 className="font-bold text-warm-900 text-sm">{n.title}</h4>
                 <p className="text-xs text-warm-700 leading-relaxed">{n.message}</p>
-                <span className="text-[10px] text-warm-400 block pt-1">{new Date(n.createdAt).toLocaleString()}</span>
+                <span className="text-[10px] text-warm-400 block pt-1">{parseServerDate(n.createdAt)?.toLocaleString() || '—'}</span>
               </div>
 
               {!n.isRead && (

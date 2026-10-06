@@ -17,7 +17,7 @@ export const Medicines = () => {
     setLoading(true);
     try {
       const data = await medicineService.searchMedicines(params);
-      setMedicines(data);
+      setMedicines(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Error fetching medicines:', error);
     } finally {
@@ -29,7 +29,7 @@ export const Medicines = () => {
     const init = async () => {
       try {
         const cats = await medicineService.getCategories();
-        setCategories(cats);
+        setCategories(Array.isArray(cats) ? cats : []);
         const catId = searchParams.get('categoryId');
         fetchMedicines({ categoryId: catId || undefined });
       } catch (err) {
@@ -55,7 +55,7 @@ export const Medicines = () => {
     fetchMedicines({ categoryId: newCat || undefined });
   };
 
-  const filteredMedicines = medicines.filter((m) => {
+  const filteredMedicines = (Array.isArray(medicines) ? medicines : []).filter((m) => {
     if (rxOnly && !m.requiresPrescription) return false;
     return true;
   });
@@ -91,11 +91,13 @@ export const Medicines = () => {
 
           <div>
             <h4 className="text-[11px] font-extrabold text-warm-400 uppercase tracking-wider mb-3">Categories</h4>
-            <div className="space-y-1">
+            <div className="space-y-1.5">
               <button
                 onClick={() => handleCategoryClick('')}
-                className={`w-full text-left px-3 py-2 rounded-xl text-xs font-bold transition ${
-                  selectedCategory === '' ? 'bg-sage-100 text-sage-800 border border-sage-200' : 'text-warm-700 hover:bg-warm-50'
+                className={`w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-bold leading-snug transition ${
+                  selectedCategory === ''
+                    ? 'bg-sage-100 text-sage-900 border border-sage-200/90 shadow-2xs'
+                    : 'text-warm-700 hover:bg-warm-50 hover:text-warm-900'
                 }`}
               >
                 All Categories
@@ -104,10 +106,10 @@ export const Medicines = () => {
                 <button
                   key={cat.id}
                   onClick={() => handleCategoryClick(cat.id)}
-                  className={`w-full text-left px-3 py-2 rounded-xl text-xs font-bold transition ${
+                  className={`w-full text-left px-3.5 py-2.5 rounded-xl text-xs font-bold leading-snug transition ${
                     selectedCategory === String(cat.id)
-                      ? 'bg-sage-100 text-sage-800 border border-sage-200'
-                      : 'text-warm-700 hover:bg-warm-50'
+                      ? 'bg-sage-100 text-sage-900 border border-sage-200/90 shadow-2xs'
+                      : 'text-warm-700 hover:bg-warm-50 hover:text-warm-900'
                   }`}
                 >
                   {cat.name}

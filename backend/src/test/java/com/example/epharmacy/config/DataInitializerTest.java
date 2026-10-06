@@ -96,16 +96,16 @@ class DataInitializerTest {
         assertEquals(14, seeded.size());
 
         // Verify representative package data
-        Medicine vitaCore = seeded.stream().filter(m -> m.getName().equals("VitaCore Daily")).findFirst().orElseThrow();
-        assertEquals(30, vitaCore.getUnitsPerPack());
-        assertEquals("tablets", vitaCore.getUnitType());
+        Medicine auraVital = seeded.stream().filter(m -> m.getName().equals("AuraVital Complete")).findFirst().orElseThrow();
+        assertEquals(30, auraVital.getUnitsPerPack());
+        assertEquals("tablets", auraVital.getUnitType());
 
-        Medicine respiraMist = seeded.stream().filter(m -> m.getName().equals("RespiraEase Mist")).findFirst().orElseThrow();
-        assertEquals(100, respiraMist.getUnitsPerPack());
-        assertEquals("ml", respiraMist.getUnitType());
+        Medicine bronchoMist = seeded.stream().filter(m -> m.getName().equals("BronchoClear Isotonic Mist")).findFirst().orElseThrow();
+        assertEquals(100, bronchoMist.getUnitsPerPack());
+        assertEquals("ml", bronchoMist.getUnitType());
 
-        Medicine dermaLotion = seeded.stream().filter(m -> m.getName().equals("DermaShield Lotion")).findFirst().orElseThrow();
-        assertEquals(200, dermaLotion.getUnitsPerPack());
-        assertEquals("ml", dermaLotion.getUnitType());
+        Medicine ceramideCream = seeded.stream().filter(m -> m.getName().equals("CeramideBarrier Intensive Cream")).findFirst().orElseThrow();
+        assertEquals(200, ceramideCream.getUnitsPerPack());
+        assertEquals("ml", ceramideCream.getUnitType());
     }
 }

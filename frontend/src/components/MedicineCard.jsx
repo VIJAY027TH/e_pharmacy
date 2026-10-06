@@ -48,24 +48,41 @@ export const MedicineCard = ({ medicine }) => {
         </span>
       </Link>
 
-      <div className="p-5 flex-1 flex flex-col justify-between">
-        <div>
-          <span className="text-[11px] font-bold text-sage-700 uppercase tracking-wider bg-sage-100 px-2.5 py-1 rounded-lg">
-            {medicine.category?.name || 'General'}
-          </span>
-          <Link to={`/medicines/${medicine.id}`} className="block mt-2.5 font-extrabold text-warm-900 text-base hover:text-sage-600 line-clamp-1 transition">
-            {medicine.name}
-          </Link>
-          <p className="text-xs text-warm-500 font-medium mt-0.5">
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+        <div className="flex flex-col flex-1">
+          {/* Category Badge - Clean, balanced category pill with consistent vertical spacing */}
+          <div className="min-h-[40px] flex items-center mb-1.5">
+            <span className="medicine-card-category inline-block text-[11px] font-bold text-sage-800 uppercase tracking-wider bg-sage-50 border border-sage-200/90 px-2.5 py-1 rounded-md text-left">
+              {medicine.category?.name || 'General'}
+            </span>
+          </div>
+
+          {/* Medicine Title - Two-line fixed minimum height with smooth wrapping */}
+          <div className="min-h-[44px] flex items-start">
+            <Link
+              to={`/medicines/${medicine.id}`}
+              className="font-extrabold text-warm-900 text-sm sm:text-base leading-snug hover:text-sage-600 line-clamp-2 transition"
+              title={medicine.name}
+            >
+              {medicine.name}
+            </Link>
+          </div>
+
+          {/* Brand & Dosage Metadata */}
+          <p className="text-xs text-warm-500 font-medium mt-1 truncate">
             Brand: {medicine.brand || 'Generic'} {medicine.dosage ? `• ${medicine.dosage}` : ''}
           </p>
-          <p className="text-xs text-warm-500 mt-2 line-clamp-2 leading-relaxed">{medicine.description}</p>
+
+          {/* Description */}
+          <p className="text-xs text-warm-500 mt-2 line-clamp-2 leading-relaxed flex-1">
+            {medicine.description}
+          </p>
         </div>
 
         <div className="mt-4 pt-3.5 border-t border-warm-100 flex items-center justify-between">
           <div>
             <span className="text-[10px] uppercase font-bold text-warm-400 block">Price</span>
-            <span className="text-lg font-black text-warm-900">${Number(medicine.price || 0).toFixed(2)}</span>
+            <span className="text-lg font-black text-warm-900">₹{Number(medicine.price || 0).toFixed(2)}</span>
           </div>
 
           {!isAdmin && (

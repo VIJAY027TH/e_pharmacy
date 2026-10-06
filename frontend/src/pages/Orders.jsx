@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { orderService } from '../services/orderService';
 import { Package, Clock, CheckCircle2, Truck, AlertCircle, XCircle } from 'lucide-react';
+import { parseServerDate } from '../utils/dateUtils';
 
 export const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -87,11 +88,11 @@ export const Orders = () => {
                 </div>
                 <div>
                   <span className="text-[10px] text-warm-400 uppercase font-extrabold block">Date</span>
-                  <span className="text-xs text-warm-700 font-bold">{new Date(order.createdAt).toLocaleDateString()}</span>
+                  <span className="text-xs text-warm-700 font-bold">{parseServerDate(order.createdAt)?.toLocaleDateString() || '—'}</span>
                 </div>
                 <div>
                   <span className="text-[10px] text-warm-400 uppercase font-extrabold block">Total</span>
-                  <span className="text-sm font-black text-sage-700">${Number(order.totalAmount || 0).toFixed(2)}</span>
+                  <span className="text-sm font-black text-sage-700">₹{Number(order.totalAmount || 0).toFixed(2)}</span>
                 </div>
                 <div>{getStatusBadge(order.orderStatus)}</div>
               </div>
@@ -101,7 +102,7 @@ export const Orders = () => {
                 {order.items?.map((item) => (
                   <div key={item.id} className="flex justify-between items-center text-xs text-warm-700">
                     <span className="font-semibold text-warm-900">{item.medicine?.name} (x{item.quantity})</span>
-                    <span className="font-black text-warm-900">${Number(item.subtotal || 0).toFixed(2)}</span>
+                    <span className="font-black text-warm-900">₹{Number(item.subtotal || 0).toFixed(2)}</span>
                   </div>
                 ))}
               </div>
@@ -115,10 +116,10 @@ export const Orders = () => {
                   <span className="text-xs text-warm-500 font-medium">
                     Estimated delivery:{' '}
                     <span className="font-bold text-warm-800">
-                      {new Date(deliveries[order.id].estimatedDelivery).toLocaleString([], {
+                      {parseServerDate(deliveries[order.id].estimatedDelivery)?.toLocaleString([], {
                         dateStyle: 'medium',
                         timeStyle: 'short'
-                      })}
+                      }) || '—'}
                     </span>
                   </span>
                 )}

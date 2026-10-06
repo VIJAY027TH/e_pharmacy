@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { prescriptionService } from '../services/prescriptionService';
 import { Upload, FileText, CheckCircle2, Clock, XCircle, AlertCircle, X } from 'lucide-react';
+import { parseServerDate } from '../utils/dateUtils';
 
 export const PrescriptionUpload = () => {
   const [file, setFile] = useState(null);
@@ -178,7 +179,7 @@ export const PrescriptionUpload = () => {
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-bold text-warm-900 text-sm">Prescription #{p.id}</h4>
-                    <p className="text-xs text-warm-500 mt-0.5">Uploaded on {new Date(p.uploadedAt).toLocaleString()}</p>
+                    <p className="text-xs text-warm-500 mt-0.5">Uploaded on {parseServerDate(p.uploadedAt)?.toLocaleString() || '—'}</p>
                     {p.notes && <p className="text-xs text-warm-700 mt-1 font-medium">Notes: {p.notes}</p>}
                   </div>
                   <div>{getStatusBadge(p)}</div>

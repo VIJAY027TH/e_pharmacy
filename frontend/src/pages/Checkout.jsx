@@ -224,7 +224,7 @@ export const Checkout = () => {
                   <p className="font-bold text-warm-900">{item.medicine.name}</p>
                   <p className="text-warm-400">Qty: {item.quantity}</p>
                 </div>
-                <span className="font-black text-warm-900">${(item.price * item.quantity).toFixed(2)}</span>
+                <span className="font-black text-warm-900">₹{(item.price * item.quantity).toFixed(2)}</span>
               </div>
             ))}
           </div>
@@ -232,7 +232,7 @@ export const Checkout = () => {
           <div className="space-y-2 text-xs border-t border-warm-100 pt-4">
             <div className="flex justify-between font-black text-base text-warm-900">
               <span>Total Payable</span>
-              <span className="text-sage-700">${totalPrice.toFixed(2)}</span>
+              <span className="text-sage-700">₹{totalPrice.toFixed(2)}</span>
             </div>
           </div>
 
@@ -265,7 +265,7 @@ export const Checkout = () => {
 
             <div className="bg-warm-50 p-4 rounded-2xl border border-warm-200 space-y-1 text-xs text-warm-700 font-bold">
               <p>Order #{createdOrder.id}</p>
-              <p className="text-sm font-black text-sage-700">Total: ${Number(createdOrder.totalAmount || totalPrice).toFixed(2)}</p>
+              <p className="text-sm font-black text-sage-700">Total: ₹{Number(createdOrder.totalAmount || totalPrice).toFixed(2)}</p>
             </div>
 
             <div className="flex justify-center space-x-3 pt-2">

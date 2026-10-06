@@ -4,6 +4,7 @@ import { medicineService } from '../services/medicineService';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { ShoppingCart, FileText, Star, Plus, Minus, ShieldCheck, ArrowLeft, AlertCircle } from 'lucide-react';
+import { parseServerDate } from '../utils/dateUtils';
 
 export const MedicineDetails = () => {
   const { id } = useParams();
@@ -88,7 +89,7 @@ export const MedicineDetails = () => {
           </div>
 
           <div className="text-3xl font-black text-warm-900">
-            ${Number(medicine.price || 0).toFixed(2)}
+            ₹{Number(medicine.price || 0).toFixed(2)}
           </div>
 
           {medicine.requiresPrescription && (
@@ -209,7 +210,7 @@ export const MedicineDetails = () => {
                   </div>
                 </div>
                 <p className="text-xs text-warm-500 mt-1 font-normal">{rev.comment}</p>
-                <span className="text-[10px] text-warm-400 block pt-1">{new Date(rev.createdAt).toLocaleDateString()}</span>
+                <span className="text-[10px] text-warm-400 block pt-1">{parseServerDate(rev.createdAt)?.toLocaleDateString() || '—'}</span>
               </div>
             ))
           )}

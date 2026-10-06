@@ -4,6 +4,7 @@ import { ArrowUpRight, CalendarDays, ClipboardList, Search, Truck } from 'lucide
 import { adminService } from '../../services/adminService';
 import { orderService } from '../../services/orderService';
 import { Drawer, EmptyState, ErrorState, LoadingState, OrderTimeline, PageHeader, StatusBadge, currency, formatDate } from '../../components/admin/AdminUI';
+import { parseServerDate } from '../../utils/dateUtils';
 
 const statusOptions = ['PLACED', 'PRESCRIPTION_PENDING', 'CONFIRMED', 'PROCESSING', 'PACKED', 'SHIPPED', 'OUT_FOR_DELIVERY', 'DELIVERED', 'CANCELLED'];
 
@@ -46,9 +47,9 @@ export const AdminOrders = () => {
     const matchesSearch = !query || searchable.some((value) => value.includes(query));
     const matchesStatus = statusFilter === 'all' || order.orderStatus === statusFilter;
     const matchesPayment = paymentFilter === 'all' || order.paymentStatus === paymentFilter;
-    const date = new Date(order.createdAt);
+    const date = parseServerDate(order.createdAt);
     const now = new Date();
-    const matchesPeriod = periodFilter === 'all' || (periodFilter === '30' && now - date <= 30 * 86400000 && now >= date) || (periodFilter === 'today' && date.toDateString() === now.toDateString());
+    const matchesPeriod = periodFilter === 'all' || (date && ((periodFilter === '30' && now - date <= 30 * 86400000 && now >= date) || (periodFilter === 'today' && date.toDateString() === now.toDateString())));
     return matchesSearch && matchesStatus && matchesPayment && matchesPeriod;
   }), [orders, search, statusFilter, paymentFilter, periodFilter]);
 

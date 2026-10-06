@@ -492,6 +492,7 @@ body { color:#252525; background:#FAF9F6; background-image:none; }
 .public-main label { font-size:14px; }
 .public-main .medicine-product-card button { min-height:40px; font-size:14px; }
 .public-main .medicine-product-card p,.public-main .medicine-product-card span { line-height:1.45; }
+.public-main .medicine-card-category { font-size:11px !important; line-height:1.35 !important; letter-spacing:0.04em !important; font-weight:700 !important; }
 .admin-account-card:hover { background:#fafbf9; border-color:#cddace; }
 .inventory-clear-state { display:flex; align-items:flex-start; gap:10px; margin-top:15px; padding:13px; color:#477052; background:#f2f7f2; border:1px solid #e0ebe1; border-radius:6px; }
 .inventory-clear-state>span { display:grid; gap:3px; }

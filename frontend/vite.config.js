@@ -7,5 +7,15 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
     allowedHosts: ['distinguished-motivation-production.up.railway.app'],
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8081',
+        changeOrigin: true,
+      },
+      '/uploads': {
+        target: 'http://localhost:8081',
+        changeOrigin: true,
+      },
+    },
   },
 })
