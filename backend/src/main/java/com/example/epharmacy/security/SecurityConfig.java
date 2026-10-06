@@ -1,5 +1,6 @@
 package com.example.epharmacy.security;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,6 +21,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,13 +32,16 @@ public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final CustomUserDetailsService userDetailsService;
+    private final String frontendUrl;
 
     public SecurityConfig(
             JwtAuthenticationFilter jwtAuthFilter,
-            CustomUserDetailsService userDetailsService) {
+            CustomUserDetailsService userDetailsService,
+            @Value("${app.cors.frontend-url:${FRONTEND_URL:https://welcoming-passion-production-5ad9.up.railway.app}}") String frontendUrl) {
 
         this.jwtAuthFilter = jwtAuthFilter;
         this.userDetailsService = userDetailsService;
+        this.frontendUrl = frontendUrl;
     }
 
     @Bean
@@ -135,14 +140,30 @@ public class SecurityConfig {
         CorsConfiguration configuration =
             new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of(
+        List<String> allowedOrigins = new ArrayList<>(List.of(
             "http://localhost:5173",
             "http://localhost:3000",
-            "http://127.0.0.1:5173",
-
-            // Railway frontend
-            "https://e-pharmacy.up.railway.app"
+            "http://127.0.0.1:5173"
         ));
+
+        if (frontendUrl != null && !frontendUrl.isBlank()) {
+            for (String origin : frontendUrl.split(",")) {
+                String trimmed = origin.trim();
+                if (!trimmed.isEmpty() && !allowedOrigins.contains(trimmed)) {
+                    allowedOrigins.add(trimmed);
+                }
+            }
+        }
+
+        // Include default production domain if not already present
+        if (!allowedOrigins.contains("https://welcoming-passion-production-5ad9.up.railway.app")) {
+            allowedOrigins.add("https://welcoming-passion-production-5ad9.up.railway.app");
+        }
+        if (!allowedOrigins.contains("https://e-pharmacy.up.railway.app")) {
+            allowedOrigins.add("https://e-pharmacy.up.railway.app");
+        }
+
+        configuration.setAllowedOrigins(allowedOrigins);
 
         configuration.setAllowedMethods(Arrays.asList(
             "GET",
