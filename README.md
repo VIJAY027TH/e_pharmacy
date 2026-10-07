@@ -35,9 +35,9 @@ A production-style full-stack E-Pharmacy application built with **Spring Boot 3.
 
 On startup, the system seeds demo user accounts:
 
-| Role | Email | Password |
-|---|---|---|
-| **Admin** | `admin@pharmavital.com` | `Pv@qtoX9PKmHEJuV` |
+| Role | Email | Password | If Not |
+|---|---|---|---|
+| **Admin** | `admin@pharmavital.com` | `Pv@qtoX9PKmHEJuV` | Recreate DB | 
 | **Customer** | `user@epharmacy.com` | `User@123` | If Not Create New One Using Register New Account|  
 
 ---
