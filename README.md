@@ -37,8 +37,8 @@ On startup, the system seeds demo user accounts:
 
 | Role | Email | Password |
 |---|---|---|
-| **Admin** | `admin@epharmacy.com` | `Admin@123` |
-| **Customer** | `user@epharmacy.com` | `User@123` |
+| **Admin** | `admin@pharmavital.com` | `Pv@qtoX9PKmHEJuV` |
+| **Customer** | `user@epharmacy.com` | `User@123` | If Not Create New One Using Register New Account|  
 
 ---
 
